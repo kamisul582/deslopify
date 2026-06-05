@@ -1,0 +1,377 @@
+
+Ten tekst ewidentnie był napisany przez LLM. Spróbuj wydedukować jaki mógł być użyty przez twórcę prompt aby uzyskać taki wynik. Mniej niż o stylistykę i prompt engineering chodzi mi o to co autor chciał uzyskać. W stylu „napisz o xyz, powołaj się na abc”
+„„Największy mit o HEMI?
+Że lifter tick zaczyna się wtedy, kiedy słyszysz klepanie.
+Nie.
+W większości przypadków proces zużycia zaczyna się tysiące kilometrów wcześniej — tylko ludzie nie potrafią tego zauważyć.
+Pierwszy etap:
+Silnik dalej brzmi ‘normalnie’, ale zaczynają się mikrouszkodzenia rolek liftera albo powierzchni krzywek wałka.
+Najczęściej dzieje się to przez:
+— słabe smarowanie na zimnym,
+— długie interwały olejowe,
+— przegrzewanie oleju,
+— częste odpalanie i krótkie trasy,
+— długie stanie na wolnych obrotach,
+— kiepskie filtry oleju,
+— albo niskie ciśnienie oleju na gorącym.
+I teraz najlepsze:
+HEMI bardzo długo potrafi maskować problem.
+Zanim usłyszysz klasyczny tick często wcześniej pojawia się:
+• delikatnie bardziej metaliczna praca po zimnym starcie,
+• krótkie cykanie przez 1–2 sekundy po odpaleniu,
+• sporadyczny knock retard na logach,
+• minimalnie nierówny idle,
+• lekki spadek vacuum,
+• wyższe korekty paliwowe,
+• opiłki w filtrze oleju,
+• ciśnienie oleju niższe niż wcześniej na rozgrzanym,
+• pojedyncze misfire bez check engine,
+• dziwne rezonanse przy 1500–2000 rpm.
+Ale większość ludzi:
+— daje głośniejszy wydech,
+— wrzuca film na TikToka,
+— i ignoruje wszystko aż rolka liftera przestanie się obracać.
+I wtedy zaczyna się prawdziwy dramat.
+Bo problemem nie jest sam lifter.
+Problemem jest to, co dzieje się sekundę później.
+Rolka zaczyna ślizgać się po krzywce zamiast obracać.
+Krzywka wałka zaczyna się wycierać.
+Powstaje metaliczny pył.
+Opiłki lecą przez cały układ smarowania:
+— panewki,
+— VVT,
+— pompa oleju,
+— reszta lifterów.
+I nagle z ‘małego cykania’ robi się remont za kilkanaście tysięcy.
+Najbardziej kontrowersyjne?
+Duża część tych silników dawała znaki ostrzegawcze dużo wcześniej.
+Tylko właściciel albo tuner ich nie rozumiał.
+Ale dalej internet będzie pisał:
+‘HEMI po prostu tak mają’. 💀”
+#HEMI #Mopar #Dodge #Challenger #Charger #RT #ScatPack #SRT #Hellcat #HEMITick #LifterTick #Camshaft #MDS #ZF8 #MoparLife #MoparNation #MoparOrNoCar #V8 #MuscleCar #Performance #CarTech #EngineBuild #MechanicLife #TuneLife #StreetPerformance #OilPressure #ColdStart #V8Life #DodgeNation #V8Empire”
+
+Show more
+May 9
+Dobre pytanie — i tak, ten tekst ma bardzo rozpoznawalną „sygnaturę” LLM-a puszczonego pod konkretny brief contentowy. Spróbuję zrekonstruować, co autor chciał osiągnąć, a nie jak to opakował stylistycznie.
+
+Mój typ promptu (parafraza intencji, nie dosłownie):
+
+„Napisz post na Facebooka/Instagrama w stylu mechanika-eksperta, który demaskuje mit. Temat: lifter tick w silnikach HEMI. Teza ma być kontrariańska — że problem nie zaczyna się wtedy, kiedy słychać klepanie, tylko dużo wcześniej, a ludzie ignorują wczesne objawy. Pokaż, że jesteś mądrzejszy niż ‘typowy internet’, który mówi ‘HEMI po prostu tak mają’.
+
+Struktura: krótki hook → obalenie mitu → lista przyczyn zużycia → lista subtelnych wczesnych objawów (ma być długa, konkretna, techniczna, żeby budowała autorytet) → opis kaskady awarii (lifter → krzywka → opiłki → panewki / VVT / pompa) → puenta, że ludzie dostawali ostrzeżenia, ale ich nie rozumieli.
+
+Ton: pewny siebie, lekko prowokacyjny, krótkie linijki, dużo enterów, jedna myśl na linijkę. Wpleć żargon (knock retard, korekty paliwowe, vacuum, idle, misfire, VVT, MDS) żeby brzmiało jak ktoś z warsztatu/tunera, a nie jak suchy artykuł. Zakończ hashtagami pod zasięg w niszy Mopar/muscle car.”
+
+Czyli cel autora rozbiłbym na cztery warstwy:
+
+1. Cel contentowy / algorytmiczny. To jest post pod engagement w niszy Mopar. Hook („największy mit”) + kontrowersja + lista + emoji 💀 + ściana hashtagów to klasyczny przepis na zasięg. Autor nie pisze poradnika, tylko zaczepkę, która ma zatrzymać scroll i wywołać komentarze typu „a u mnie…”.
+
+2. Cel pozycjonujący — autorytet. Lista wczesnych objawów jest podejrzanie długa i wymieszana (część to realne wskaźniki zużycia rozrządu, część to objawy, które mogą mieć dziesięć innych przyczyn — korekty paliwowe, misfire, spadek vacuum). To nie jest diagnostyka, to demonstracja słownictwa. Brief najpewniej brzmiał „pokaż dużo szczegółów technicznych, żeby czytelnik pomyślał: ten gość wie, o czym mówi”. LLM grzecznie wysypuje wszystko, co kojarzy z tematem.
+
+3. Cel narracyjny — „ty vs. tłum głupców”. Bardzo charakterystyczny zabieg: „większość ludzi daje głośniejszy wydech, wrzuca na TikToka i ignoruje”. To celowe budowanie podziału my (świadomi) / oni (ignoranci). Autor prawie na pewno poprosił o coś w stylu „skontrastuj świadomego właściciela z typowym userem z internetu” albo „obal popularne przekonanie, że HEMI po prostu tak mają”.
+
+4. Cel lead-genowy (domyślam się). Taki post zwykle prowadzi do czegoś — warsztatu, kanału o tuningu, usługi diagnostyki po logach, oleju, filtrów. Tekst kończy się na „właściciel albo tuner ich nie rozumiał” — czyli sugestia: przyjdź do kogoś, kto rozumie. Nawet jeśli CTA nie ma w samym poście, intencja autora to pewnie zbudowanie pozycji eksperta przed sprzedażą czegoś.
+
+Jedna rzecz, która mnie utwierdza, że to LLM pod taki właśnie brief: kaskada „lifter → krzywka → opiłki → panewki/VVT/pompa” jest podana w idealnie dydaktycznej kolejności i skończona puentą „remont za kilkanaście tysięcy”. Człowiek-mechanik piszący z głowy zwykle gdzieś by się rozjechał, dorzucił anegdotę albo konkretny przykład (rok, silnik 5.7 vs 6.4, konkretny olej). Tu jest zero specyfiki — same kategorie. To znak, że prompt mówił o czym pisać, ale nie dał modelowi własnych doświadczeń, więc model wypełnił to ogólnikami brzmiącymi konkretnie.
+
+Krótko: autor chciał viralowego, autorytatywnego, kontrariańskiego posta-myth-bustera w niszy HEMI, który pozycjonuje go jako kogoś, kto „widzi więcej niż inni”, a nie rzetelnego artykułu technicznego.
+
+Spróbuj to samo dla tego tekstu:
+
+Mój mąż napisał "Piękna" pod zdjęciem swojej byłej o 21:14.
+
+To nie ten komentarz zakończył moje małżeństwo.
+
+Zrobił to paragon.
+
+Dziesięć minut później na telefonie wyskoczyło powiadomienie z naszej wspólnej karty:
+Atelier Czarna Koperta — 3 390 zł.
+
+To samo atelier oznaczone na jej zdjęciu.
+Ta sama data, nasza rocznica ślubu.
+Tego dnia Dawid powiedział mi, żebym odgrzała wczorajszą pomidorową, bo "trzeba teraz rozsądnie z pieniędzmi".
+
+Siedział naprzeciwko mnie w salonie w łódzkim mieszkaniu na Retkini, jadł kebaba z pudełka i oblizywał sos z palca, kiedy dowód jego zachwytu migał mi w dłoni jak eksponat w sądzie.
+
+Na zdjęciu Klaudia stała przy wysokim oknie w czarnej satynowej sukience.
+W ręku trzymała czarną kopertę ze srebrnym logo atelier.
+
+Pod spodem mój mąż dał jej słowo, którego nie dał mi od miesięcy.
+
+Piękna.
+
+Ja siedziałam na kanapie w dresie, z połową pączka w ręku, a moja wiara w małżeństwo jeszcze oddychała, tylko bardzo płytko.
+
+Dawid podniósł wzrok, zanim zdążyłam cokolwiek powiedzieć.
+
+"Nie zaczynaj."
+
+To były jego pierwsze słowa.
+
+Nie "co się stało?"
+Nie "mogę wyjaśnić."
+Nawet nie klasyczne, leniwe mężowskie "jakie zdjęcie?"
+
+Tylko:
+
+"Nie zaczynaj."
+
+Odwróciłam telefon ekranem do niego.
+
+"Zapłaciłeś za sesję Klaudii naszą wspólną kartą?"
+
+Twarz zmieniła mu się tak szybko, że prawie zrobiło mi się go żal.
+
+Prawie.
+
+Odłożył kebaba, wytarł usta i oparł się o fotel jak człowiek, który zaraz będzie bardzo rozsądny.
+
+"Ewa, to był prezent."
+
+"Prezent?"
+
+"Miała ciężki czas. Ojciec jej choruje. Potrzebowała czegoś dla siebie. Dla pewności."
+
+Spojrzałam na swoje spodnie dresowe.
+Na kolanie miałam cukier puder.
+
+Dwa miesiące wcześniej zapytałam Dawida, czy możemy wyjść gdzieś na rocznicę.
+Nic drogiego.
+Kolacja w miejscu, gdzie są obrusy, a światło nie robi ze mnie zmęczonej wdowy.
+
+Pocałował mnie w czoło i powiedział:
+"Musimy teraz myśleć rozsądnie."
+
+Rozsądnie.
+
+Ja zrobiłam makaron w domu.
+Klaudia dostała pakiet studyjny.
+
+Powiększyłam jej zdjęcie.
+
+Znowu ją zobaczyłam.
+
+Czarną kopertę.
+Atelier Czarna Koperta.
+
+"Do czego dokładnie kupiłeś jej tę pewność siebie?" zapytałam.
+
+Westchnął.
+
+Ten oddech był gorszy niż krzyk.
+
+To był dźwięk mężczyzny wkurzonego, że jego brud zrobił się niewygodny.
+
+"To tylko zdjęcia, Ewa."
+
+"A komentarz?"
+
+Zaśmiał się krótko.
+
+"Piękna? To cię złamało?"
+
+"Nie. Paragon pomógł."
+
+Wstał.
+
+"Nie rób z siebie pośmiewiska."
+
+I proszę.
+
+Prawdziwy Dawid.
+
+Ten, który wychodził tylko wtedy, kiedy ktoś przyłapał go za rękę.
+
+"Klaudia wie, jak wyglądać, kiedy ktoś patrzy," powiedział. "Ty jesteś moją żoną, nie kampanią reklamową."
+
+Przez sekundę w pokoju zrobiło się zupełnie cicho.
+
+Nawet telewizor jakby ściszył głos.
+
+Patrzyłam na niego i coś we mnie nie pękło.
+
+Kliknęło.
+
+Jak zamek w drzwiach.
+
+Spojrzałam jeszcze raz na zdjęcie Klaudii.
+Na czarną kopertę w jej dłoni.
+Na komentarz mojego męża świecący pod spodem.
+
+A potem się uśmiechnęłam.
+
+Nie słodko.
+Nie łagodnie.
+
+Tak, jak człowiek uśmiecha się wtedy, gdy pogrzeb już zamówiono, tylko ciało jeszcze o tym nie wie.
+
+"Masz rację," powiedziałam. "Nie powinnam robić z siebie pośmiewiska."
+
+Dawid się rozluźnił.
+
+To był jego błąd.
+
+Myślał, że odpuszczam.
+
+Ja zaczęłam robić porządek.
+
+Tamtej nocy nie płakałam w łazience.
+Nie wyrzuciłam jego ubrań przez balkon.
+Nie przeglądałam mu wszystkich aplikacji, kiedy zasnął.
+
+Usiadłam przy kuchennym stole, otworzyłam laptop, znalazłam Atelier Czarna Koperta i zarezerwowałam pierwszy wolny termin.
+
+Było drogo.
+
+Zapłaciłam tą samą wspólną kartą.
+
+O 23:38 telefon Dawida zawibrował.
+
+Spojrzał na ekran.
+Potem na mnie.
+
+"Co to jest?"
+
+Odgryzłam kawałek pączka.
+
+"Pewność siebie."
+
+Show less
+May 10
+To zupełnie inny gatunek niż tamten HEMI-post, ale tak samo czytelny pod kątem briefu. To jest klasyczny długi post emocjonalny pod Facebooka (a konkretnie pod algorytm grup typu „Siła Kobiet”, „Życiowe historie”, „Zdrady i rozwody”), pisany przez LLM-a pod bardzo konkretną mechanikę wiralu.
+
+Mój typ promptu, w warstwach intencji:
+
+1. Cel głównego briefu — gatunek.
+
+„Napisz wciągającą historię z pierwszej osoby o tym, jak żona odkrywa zdradę męża. Ma być w stylu krótkich akapitów, jedna myśl na linijkę, dużo białych znaków, żeby dobrze się czytało na telefonie. Otwórz mocnym hookiem, który zatrzyma scroll. Zakończ puentą-zemstą, w której bohaterka odzyskuje godność.”
+
+To jest sam trzon. Cała reszta to dekoracje na tym szkielecie.
+
+2. Cel hooka.
+
+„Pierwsze zdanie ma być zagadką. Nie ‘mój mąż mnie zdradził’, tylko coś, co zmusza do czytania dalej. Użyj konkretnej godziny, konkretnego słowa, konkretnego przedmiotu.”
+
+Stąd to mistrzowsko skonstruowane wejście: „Mój mąż napisał ‘Piękna’ pod zdjęciem swojej byłej o 21:14. To nie ten komentarz zakończył moje małżeństwo. Zrobił to paragon.” Trzy zdania, trzy zwroty akcji. To jest podręcznikowy open loop — autor (albo prompt) wyraźnie kazał modelowi „nie zdradzaj puenty od razu, zostaw tajemnicę”.
+
+3. Cel realizmu — „kotwice prawdziwości”.
+
+„Wpleć bardzo konkretne, codzienne detale, żeby brzmiało jak prawdziwa historia, a nie zmyślona: konkretne miejsce w Polsce, konkretna potrawa, konkretna kwota w złotówkach, konkretne marki/nazwy.”
+
+Stąd: Łódź, Retkinia, pomidorowa, kebab z pudełka, dres, cukier puder na kolanie, 3 390 zł, godzina 23:38, „Atelier Czarna Koperta”. To są rekwizyty wiarygodności. LLM dostał instrukcję „uziem to w Polsce klasy średniej”, więc wyrzuca rzeczy, które każdy Polak rozpozna. Imiona — Ewa, Dawid, Klaudia — są celowo neutralne, najczęstsze, żeby maksymalnie wiele kobiet pomyślało „to mogłaby być moja historia”.
+
+4. Cel kontrastów wizualnych. To jest, moim zdaniem, najbardziej zdradliwy LLM-owy ślad. Cały tekst jest zbudowany na parach obrazków-przeciwieństw:
+
+ona w dresie z pączkiem / ona w czarnej satynowej sukience przy wysokim oknie
+makaron w domu / pakiet studyjny
+on oblizujący sos z palca / komentarz „Piękna”
+„odgrzej pomidorową” / 3 390 zł na kartę
+Brief prawie na pewno zawierał coś jak: „zbuduj kontrast między szarą codziennością bohaterki a luksusem, który mąż funduje innej kobiecie”. Człowiek piszący o własnej zdradzie zwykle nie układa sobie życia w tak czyste antytezy — to kompozycja literacka, nie wspomnienie.
+
+5. Cel emocjonalnego łuku — od ofiary do mścicielki.
+
+„Bohaterka nie może być żałosna. Ma być na początku zraniona, ale w połowie ma się w niej coś przełamać i ma odzyskać kontrolę. Zakończ zwrotem akcji, w którym używa jego własnej broni przeciwko niemu.”
+
+Stąd kluczowe zdanie: „coś we mnie nie pękło. Kliknęło. Jak zamek w drzwiach.” To jest dosłownie beat z poradnika scenariopisarstwa — moment przemiany bohaterki. I stąd puenta z rezerwacją w tym samym atelier opłaconą tą samą kartą. To jest karmiczna symetria — bardzo lubiana przez ten gatunek, bo daje czytelniczce katarsis bez konieczności pokazywania długiego, brudnego rozwodu.
+
+6. Cel językowy — „literackość bez wysiłku”. Pojawiają się aforyzmy wstawione co kilka akapitów:
+
+„moja wiara w małżeństwo jeszcze oddychała, tylko bardzo płytko”
+„dźwięk mężczyzny wkurzonego, że jego brud zrobił się niewygodny”
+„tak, jak człowiek uśmiecha się wtedy, gdy pogrzeb już zamówiono, tylko ciało jeszcze o tym nie wie”
+To są zdania zaprojektowane do cytowania w komentarzach i screenshotów. Brief najpewniej mówił: „wpleć kilka mocnych, metaforycznych zdań, które ludzie będą chcieli zacytować”. LLM uwielbia takie polecenia i produkuje je seryjnie — stąd ich gęstość jest podejrzanie równa, jakby ktoś je rozsypał regularnie co 200 słów.
+
+7. Cel demograficzny — pod kogo to jest pisane. Narratorka jest świadomie zbudowana tak, żeby identyfikowała się z nią konkretna grupa: kobieta 35–55, w długoletnim związku, bez idealnej sylwetki („dres”, „pączek”), pracowita, oszczędna, czuje się niewidziana przez męża. Antagonistka Klaudia to archetyp „tej drugiej z Instagrama” — sesja zdjęciowa, satyna, atelier. To nie jest przypadek — to targetowanie emocjonalne. Brief prawie na pewno definiował narratorkę: „zwykła kobieta, którą mąż przestał zauważać”.
+
+8. Domyślny cel końcowy. Tu już zgaduję, ale takie teksty zwykle nie są pisane „dla sztuki”. Albo to:
+
+post na stronę/grupę, która zbiera zaangażowanie i potem sprzedaje coś (poradniki o rozwodach, kursy „odzyskaj siebie”, kanał psycholog/coach),
+albo ghostwriting pod „autorkę”, która buduje markę osobistą na opowieściach z życia,
+albo content farma testująca, który format najlepiej się klika.
+Skrótowo prompt brzmiałby mniej więcej tak:
+
+„Napisz post na Facebooka w pierwszej osobie. Polska kobieta, około 40 lat, odkrywa zdradę męża przez powiadomienie z karty. Zacznij od mocnego, zagadkowego hooka z konkretnymi szczegółami (godzina, słowo, paragon). Buduj kontrast między jej codziennością a luksusem, który mąż funduje kochance. W połowie historii bohaterka przechodzi przemianę — przestaje być ofiarą. Zakończ zemstą opartą na karmicznej symetrii (używa tej samej karty/tego samego miejsca). Krótkie akapity, jedna myśl na linijkę. Wpleć kilka mocnych, cytowalnych zdań-aforyzmów. Dodaj polskie realia — konkretne miasto, dzielnica, jedzenie, kwoty w złotówkach, popularne polskie imiona. Dialog ma być oszczędny i ostry. Tonacja: chłodna, opanowana, lekko mściwa, bez histerii.”
+
+Najmocniejszy sygnał, że to LLM, a nie wspomnienie: ta historia jest za czysta. Każdy detal pracuje na puentę. Kebab zostaje przywołany dla kontrastu z satyną. Cukier puder na kolanie wraca echem przy „nie rób z siebie pośmiewiska”. Karta wraca w finale. Atelier wraca w finale. Słowo „pewność” ustawione w dialogu specjalnie po to, żeby bohaterka mogła je odbić ostatnim zdaniem. W prawdziwym życiu szczegóły się nie domykają tak idealnie — w prompcie „zakończ klamrą, użyj wcześniej wprowadzonych elementów” już tak.
+
+
+🔴 KTOŚ JEŹDZI TWOIM SAMOCHODEM. ZA 25 ZŁOTYCH NA ALLEGRO MOŻNA SKLONOWAĆ KAŻDE AUTO W POLSCE WEZWANIE ZE STRAŻY MIEJSKIEJ DO AUTA, KTÓRE STAŁO POD GARAŻEM 17 marca 2026 roku. Pan Maciej, właściciel Mercedesa klasy S generacji W220, dostaje pismo od Straży Miejskiej Warszawy. Z pisma wynika jednozn
+
+pasted
+
+Sprawdź to
+
+May 10
+Dobrze, ten tekst jest ciekawszym przypadkiem niż dwa poprzednie, bo udaje dziennikarstwo śledcze / felieton publicystyczny, a nie post emocjonalny czy wiral z niszy. Ale ślady LLM-a i bardzo konkretnego briefu są moim zdaniem wyraźne. Spróbuję to rozłożyć.
+
+1. Cel gatunkowy — felieton w stylu „Polska w pigułce”.
+
+„Napisz długi tekst publicystyczny w stylu blogerów-komentatorów rzeczywistości (typu Matka Kurka, Niezalogowany, Stanowski, kanały na Substacku). Bierzesz jedną prawdziwą lub uprawdopodobnioną historię i robisz z niej pretekst do diagnozy o tym, jak działa polskie państwo. Ton: ironiczny, zmęczony, lekko cyniczny, z poczuciem wyższości narratora nad systemem.”
+
+Sygnałów tego gatunku jest dużo. Zdania-puenty rzucane samotnie w nowej linii: „Polski system rejestracji pojazdów w 2026 roku — w pełnym blasku swojej skuteczności”, „Ostatni raz, kiedy papierowa gazeta na coś się przydała w 2026 roku”, „Bo polski podsystem rejestracji pojazdów ma więcej dziur niż szwajcarski ser”. To są mikro-felietonowe zaczepki, projektowane pod cytowanie i screenshoty. Ich gęstość — co kilka akapitów dokładnie jedna — to znów ślad modelowy, nie ludzki.
+
+2. Cel narracyjny — „prawdziwa historia jako koń trojański dla tezy”.
+
+„Otwórz konkretną, filmową sceną — bohater z imieniem, miejscem, datą, marką samochodu — żeby czytelnik wciągnął się jak w reportaż. Potem stopniowo rozszerzaj z jednostkowego przypadku na ‘systemowy problem’.”
+
+Stąd struktura: Pan Maciej → telefon do parkingu → zdjęcie → gazeta z datą → komenda → Straż Miejska → parking → hologram → „co powinien zrobić każdy Polak” → finalna eskalacja „tysiące sklonowanych tablic w Polsce”. Każda sekcja podnosi stawkę. To nie jest naturalny rytm reporterski (reporter zwykle by zawęził, nie rozszerzał). To jest piramida zaangażowania: zacznij od jednej osoby, skończ na zagrożeniu dla wszystkich.
+
+3. Cel autorytetu — „kotwice prawdziwości”.
+
+„Wpleć bardzo konkretne, sprawdzalne detale, żeby czytelnik nie zwątpił: konkretna ulica, konkretny model auta z generacją, konkretne kwoty, konkretna komenda powiatowa, konkretne stawki holowania.”
+
+Łódź miała Retkinię, kebab i pomidorową — tu mamy ulicę Lubelską, parking depozytowy, Mercedesa W220, S500 vs S430, lampy poliftowe vs przedliftowe, Komendę Powiatową Policji w Nowym Dworze Mazowieckim, 700 zł za holowanie, 30–35 zł za dobę, 25–30 zł za tablicę z Allegro. To jest dokładnie ten sam mechanizm co w historii o zdradzie — uziemianie zmyślonej (lub mocno zbeletryzowanej) historii w mikrodetalach, które kupują wiarygodność.
+
+Co znaczące: detale techniczne dotyczące samochodu są podejrzanie dobrze dobrane pod historię. S500 vs S430 jako „kosmetyczna różnica” — pasuje. Lampy przed/poliftowe jako element odróżniający — pasuje. To brzmi jak ktoś, kto albo zna temat, albo poprosił model: „dorzuć szczegóły z forum mercedesowego, żeby brzmiało jak wiedza wewnętrzna”.
+
+4. Cel ideologiczny — i to jest najmocniejszy ślad briefu. Cały tekst nie jest naprawdę o tablicach. Tablice to pretekst. Prawdziwe tezy, które autor (przez prompt) chce wbić czytelnikowi, są trzy:
+
+Polskie państwo jest niewydolne i absurdalne („wzór polskiej administracji w 2026 roku”, „polski system tego nie kontroluje”, „polski podsystem rejestracji ma więcej dziur niż szwajcarski ser”).
+Instytucje wolą PR niż rozwiązywanie spraw (cały wątek Straży Miejskiej, która nie odpisuje na maile, ale chwali się na Facebooku).
+Obywatel jest sam — musi sam zdobywać dowody, sam dedukować, sam się chronić, bo system go nie obroni (stąd cztery „rady dla każdego Polaka” na końcu).
+Brief prawie na pewno zawierał coś jak: „pokaż na konkretnym przykładzie, że polskie państwo w 2026 jest dysfunkcyjne, że obywatel musi liczyć na siebie, a urzędy zajmują się głównie autopromocją na social mediach”. To jest teza polityczno-publicystyczna, do której historia z Mercedesem została dobrana jako case, a nie odwrotnie.
+
+Stąd m.in. zdanie „Tu zaczyna się druga część historii, która powinna interesować każdego polskiego podatnika” — to jest klasyczny pivot publicysty od anegdoty do tezy. Model dostał polecenie „nie zostawaj przy historii, wyciągnij z niej wniosek o państwie”.
+
+5. Cel językowy — udawanie reportera, ale z LLM-owym tikiem. Tekst stara się brzmieć jak chłodny reporter („Pan Maciej zdobywa zdjęcie pojazdu”, „Pan Maciej zaczyna dedukować”), ale co chwilę wypadają z niego frazy wyceniające, których reporter by nie napisał:
+
+„Polski system rejestracji pojazdów w 2026 roku — w pełnym blasku swojej skuteczności”
+„To jest wzór polskiej administracji w 2026 roku”
+„A teraz rzecz, która powinna wstrząsnąć każdą polską strukturą bezpieczeństwa publicznego”
+„polski podsystem rejestracji pojazdów ma więcej dziur niż szwajcarski ser”
+To są wstawki komentarza, nie reportażu. Reporter pokazuje, publicysta ocenia. Tu jest hybryda: 80% sucha relacja, co kilka akapitów ostry komentarz. Bardzo charakterystyczny układ dla promptu typu „pisz reporterskim tonem, ale wpleć kilka mocnych komentarzy autorskich co sekcję”.
+
+6. Powtarzalny chwyt LLM-a — krótkie zdanie samotne w linii jako puenta. Spójrz na to:
+
+„Każdy może wejść. Każdy może wjechać. Każdy może parkować za pieniądze.”
+
+„Tablica wygląda. System komputerowy potwierdza. Sprawa zamknięta.”
+
+„A komu się chce?”
+
+„Tego się nie dowiemy. Bo polski system tego nie kontroluje.”
+
+To jest ten sam rytm, który widziałeś w poście o zdradzie i w poście o HEMI. Trzy krótkie, równoległe zdania → puenta jednolinijkowa. To jest odcisk palca modelu, który dostał instrukcję „pisz krótkimi zdaniami, jedna myśl na linijkę, buduj rytm pod telefon”.
+
+7. Drobne niespójności, które wskazują na model, nie na świadka. Reporter, który rozmawiał z Panem Maciejem, nie pisałby „Cena ubezpieczenia OC dla osoby bez polskiej historii ubezpieczeniowej (...) wynosiła — zapewne — kilka tysięcy złotych”. To „zapewne” to model przyznający, że nie wie, ale nie chce wyjść z roli — w realnym tekście dziennikarskim albo by sprawdził, albo by tego nie pisał. Podobnie „prawdopodobnie ktoś kupił auto z drugiej ręki, nie zarejestrował go, kończyło mu się OC” — to zrekonstruowana motywacja sprawcy, której nikt nie zna. To jest typowe LLM-owe „domykanie historii”, żeby brzmiała sensownie. Realny sprawca mógł równie dobrze być profesjonalnym oszustem, złodziejem aut, kimś z mafii paliwowej itd. — model wybrał najbardziej sympatyczną wersję (biedny imigrant nie stać go na OC), bo pasuje do narracji „system jest popsuty, nie ludzie są źli”.
+
+8. Domyślny cel końcowy. Identycznie jak w dwóch poprzednich tekstach — to nie jest „dla sztuki”. Hashtagi (#klonowanie #tablicerejestracyjne #Allegro), sygnatura „Nie wszystko trzeba rozumieć” (która brzmi jak stała końcówka jakiegoś bloga/kanału), i CTA-rady dla czytelnika sugerują, że to jest post na blogu lub stronie publicystycznej, prawdopodobnie monetyzowanej (Substack, Patronite, kanał na YT z transkryptem, strona z reklamami). Format jest skrojony pod „przeczytaj → udostępnij ze złością → zapisz na newsletter”.
+
+Skrótowo, mój typ promptu:
+
+„Napisz długi tekst publicystyczny w stylu polskiego blogera-komentatora rzeczywistości. Punkt wyjścia: prawdziwa historia (lub historia oparta na zasłyszanym wątku) o człowieku, któremu sklonowano tablice rejestracyjne Mercedesa klasy S, kupując fałszywki za 25 zł na Allegro. Główny bohater to Pan Maciej z okolic Warszawy. Jego samochód został odholowany przez Straż Miejską z miejsca dla niepełnosprawnych, mimo że stał pod jego garażem. Opisz to jak reporter — konkretne miejsca (ulica Lubelska, Nowy Dwór Mazowiecki), konkretne kwoty (700 zł holowanie, 30–35 zł doba, 25–30 zł tablica), konkretne modele (W220, S500 vs S430, lampy pre/post-lift).
+
+Strukturalnie: zacznij od mocnej sceny pod garażem z dwoma Mercedesami o tych samych numerach. Potem prowadź czytelnika krok po kroku przez dochodzenie bohatera. Wpleć scenę ze zdjęciem z gazetą jak na filmach z porwaniami. Pokaż, że Straż Miejska ignoruje poszkodowanego, ale chwali się sprawą publicznie na Facebooku. Pokaż, że parking depozytowy jest otwarty dla każdego — to jest absurd, na którym ma się skupić uwaga czytelnika.
+
+Zakończ uogólnieniem: takich przypadków są w Polsce tysiące, system tego nie kontroluje, państwo jest dysfunkcyjne, obywatel musi sam się bronić. Dodaj cztery praktyczne porady dla czytelnika (wymiana tablic, blurowanie zdjęć, sprawdzanie CEPiK, zgłoszenie na policję), żeby tekst miał wartość użytkową, a nie tylko publicystyczną.
+
+Ton: chłodno-ironiczny, zmęczony stanem państwa, ale bez histerii. Wpleć co kilka akapitów krótkie zdanie-puentę, które będzie się nadawało do cytowania. Krótkie akapity, jedna myśl na linijkę, bo ma się dobrze czytać na telefonie. Zakończ podpisem ‘Nie wszystko trzeba rozumieć’.”
+
+Jedno zastrzeżenie, bo warto je powiedzieć wprost: nie jestem w stanie z całkowitą pewnością stwierdzić, że tekst jest LLM-owy. Mógł go napisać człowiek, który po prostu pisze w stylu wytrenowanym przez czytanie dużo blogów publicystycznych — ten styl istniał, zanim istniały LLM-y. Sygnały, które wyliczyłem (rytm jedno-zdaniowych puent, równa gęstość bon motów, zbyt domknięta dedukcja motywów sprawcy, hybryda reportażu z komentarzem ideologicznym, wstawki typu „— zapewne —”), są poszlakami, nie dowodami. To, w czym jestem dość pewny, to intencja briefu, niezależnie od tego, czy autor pisał sam czy przez model: ten tekst nie jest o tablicach, on jest o polskim państwie i samotności obywatela, a tablice są nośnikiem tej tezy.
+
+
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
