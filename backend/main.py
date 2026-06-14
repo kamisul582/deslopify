@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
     global redis_client
     upstash_url = os.getenv("UPSTASH_REDIS_REST_URL")
     upstash_token = os.getenv("UPSTASH_REDIS_REST_TOKEN")
-    if upstash_url and upstash_token:
+    if upstash_url and upstash_token and upstash_url.startswith(("redis://", "rediss://")):
         redis_client = aioredis.from_url(
             upstash_url,
             password=upstash_token,
@@ -47,11 +47,25 @@ ai_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 # ── Prompts ──────────────────────────────────────────────────────────────────
 
-DETECTION_SYSTEM = """You are an expert at identifying AI-generated text.
-Analyze the given text and return a JSON object with:
-- "is_ai": boolean — true if the text shows strong AI-generation signals
-- "confidence": float 0.0–1.0 — how confident you are
-- "signals": list of short strings describing what you noticed (max 4)
+DETECTION_SYSTEM = """You are an expert at identifying AI-generated text, specifically text produced by LLMs and posted on social media or blogs.
+
+Analyze the text for structural hallmarks of LLM output — NOT surface features like specific details or emotional language, which LLMs routinely mimic.
+
+Real AI-generation signals (structural, not surface):
+- Perfect narrative arc: every scene, detail, and line of dialogue serves the ending. Nothing is irrelevant or random.
+- Evenly distributed quotable one-liners / aphorisms — spaced too regularly, like someone seeded them every 200 words
+- Karmically symmetrical endings where earlier props return as punchlines (e.g. the same card, the same word, the same place used to "close the loop")
+- Binary contrasts that are too clean (victim/villain, luxury/poverty, ignorant masses/enlightened narrator)
+- Technical vocabulary deployed at uniform density rather than in natural bursts
+- Zero digressions, typos, tangents, or irrelevant memories — human writing is messier
+- Hashtag walls or SEO-optimized closings
+- "Us vs. them" framing with a narrator who is always right and the crowd who is always wrong
+- Emotional beats that follow a scripted arc (wounded → transformation moment → cold revenge), each telegraphed clearly
+
+Return a JSON object with:
+- "is_ai": boolean — true if structural AI signals are present
+- "ai_probability": float 0.0–1.0 — probability the text was AI-generated (not your confidence in the answer — the actual probability it is AI)
+- "signals": list of up to 4 short strings naming the specific structural signals you found
 
 Return ONLY valid JSON, no prose."""
 
@@ -121,7 +135,14 @@ def _call_haiku(system: str, user_text: str) -> dict:
         ],
         messages=[{"role": "user", "content": user_text}],
     )
-    return json.loads(response.content[0].text)
+    raw = response.content[0].text.strip()
+    # Strip markdown code fences if present
+    if raw.startswith("```"):
+        raw = raw.split("```", 2)[1]
+        if raw.startswith("json"):
+            raw = raw[4:]
+        raw = raw.rsplit("```", 1)[0].strip()
+    return json.loads(raw)
 
 
 def detect_ai(text: str) -> dict:
@@ -156,13 +177,14 @@ async def analyze(request: Request, body: AnalyzeRequest):
         )
 
     detection = detect_ai(body.text)
-    is_ai = detection.get("is_ai", False)
-    confidence = detection.get("confidence", 0.0)
+    ai_probability = detection.get("ai_probability", 0.0)
+    # Use probability as the source of truth; is_ai flag is a secondary signal
+    is_ai = ai_probability >= 0.5 or detection.get("is_ai", False)
 
-    if not is_ai or confidence < 0.4:
+    if not is_ai:
         return {
             "is_ai": False,
-            "confidence": confidence,
+            "confidence": ai_probability,
             "signals": detection.get("signals", []),
             "message": "This text doesn't show strong AI-generation signals. No agenda analysis performed.",
             "remaining_today": remaining,
@@ -172,7 +194,7 @@ async def analyze(request: Request, body: AnalyzeRequest):
 
     return {
         "is_ai": True,
-        "confidence": confidence,
+        "confidence": ai_probability,
         "signals": detection.get("signals", []),
         "agenda": agenda,
         "remaining_today": remaining,
