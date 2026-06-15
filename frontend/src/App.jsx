@@ -3,11 +3,51 @@ import "./App.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
+const DEMO_TEXT = `The #1 mistake people make with their morning routine?
+
+They optimize for discipline instead of identity.
+
+Here's what nobody tells you about high performers:
+
+They don't wake up at 5am because they're disciplined.
+They wake up at 5am because they've decided who they are.
+
+I spent 3 years studying the routines of CEOs, athletes, and Navy SEALs.
+The pattern was clear.
+
+Discipline is a story you tell yourself after the habit is already formed.
+Identity is what builds the habit in the first place.
+
+So before you set another alarm, ask yourself:
+Who is the person I'm trying to become?
+
+Not what do I want to achieve.
+Who do I want to BE.
+
+Because when your habits match your identity, discipline becomes irrelevant.
+
+The alarm goes off.
+You get up.
+Not because you have to.
+Because that's what people like you do.
+
+Start with identity. Everything else follows.
+
+Save this. You'll need it on the hard days.
+
+#MorningRoutine #Mindset #PersonalDevelopment #Success #Discipline #GrowthMindset #Productivity #Leadership #Motivation #SelfImprovement`;
+
 export default function App() {
   const [text, setText] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  function loadDemo() {
+    setText(DEMO_TEXT);
+    setResult(null);
+    setError(null);
+  }
 
   async function handleAnalyze() {
     setLoading(true);
@@ -37,7 +77,8 @@ export default function App() {
       <header>
         <h1>Deslopify</h1>
         <p className="tagline">
-          Paste AI-generated text. Find out what the author actually wanted.
+          AI detectors tell you <em>if</em> text was AI-generated.<br />
+          Deslopify tells you <em>why</em> — what the author actually wanted.
         </p>
       </header>
 
@@ -50,13 +91,18 @@ export default function App() {
             rows={10}
           />
           <div className="input-meta">
-            <span className="char-count">{text.length.toLocaleString()} chars</span>
-            <button
-              onClick={handleAnalyze}
-              disabled={loading || text.trim().length < 50}
-            >
-              {loading ? "Analyzing…" : "Analyze"}
+            <button className="demo-btn" onClick={loadDemo}>
+              Try a demo
             </button>
+            <div className="input-actions">
+              <span className="char-count">{text.length.toLocaleString()} chars</span>
+              <button
+                onClick={handleAnalyze}
+                disabled={loading || text.trim().length < 50}
+              >
+                {loading ? "Analyzing…" : "Analyze"}
+              </button>
+            </div>
           </div>
         </section>
 
