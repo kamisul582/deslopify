@@ -147,12 +147,44 @@ def analyze_agenda(text: str) -> dict:
     return _call_haiku(ANALYSIS_SYSTEM, text)
 
 
+# ── Stats ─────────────────────────────────────────────────────────────────────
+
+
+async def record_stats(is_ai: bool):
+    if not redis_client:
+        return
+    today = time.strftime("%Y-%m-%d")
+    await redis_client.incr("stats:total")
+    await redis_client.incr("stats:ai_detected" if is_ai else "stats:not_ai")
+    await redis_client.incr(f"stats:daily:{today}")
+
+
 # ── Routes ────────────────────────────────────────────────────────────────────
 
 
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+@app.get("/stats")
+async def stats(request: Request):
+    secret = os.getenv("STATS_SECRET")
+    if secret and request.headers.get("X-Stats-Secret") != secret:
+        raise HTTPException(status_code=403)
+    if not redis_client:
+        return {"error": "Redis not configured"}
+    total = int(await redis_client.get("stats:total") or 0)
+    ai_detected = int(await redis_client.get("stats:ai_detected") or 0)
+    not_ai = int(await redis_client.get("stats:not_ai") or 0)
+    today_count = int(await redis_client.get(f"stats:daily:{time.strftime('%Y-%m-%d')}") or 0)
+    return {
+        "total_analyses": total,
+        "ai_detected": ai_detected,
+        "not_ai": not_ai,
+        "today": today_count,
+        "ai_detection_rate_pct": round(ai_detected / max(total, 1) * 100, 1),
+    }
 
 
 @app.post("/analyze")
@@ -174,6 +206,8 @@ async def analyze(request: Request, body: AnalyzeRequest):
     ai_probability = detection.get("ai_probability", 0.0)
     # Use probability as the source of truth; is_ai flag is a secondary signal
     is_ai = ai_probability >= 0.5 or detection.get("is_ai", False)
+
+    await record_stats(is_ai)
 
     if not is_ai:
         return {
