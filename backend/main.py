@@ -4,7 +4,7 @@ import time
 from contextlib import asynccontextmanager
 
 import anthropic
-import redis.asyncio as aioredis
+from upstash_redis.asyncio import Redis as UpstashRedis
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,7 +16,7 @@ RATE_LIMIT_PER_DAY = int(os.getenv("RATE_LIMIT_PER_DAY", "5"))
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
-redis_client: aioredis.Redis | None = None
+redis_client: UpstashRedis | None = None
 
 
 @asynccontextmanager
@@ -24,15 +24,9 @@ async def lifespan(app: FastAPI):
     global redis_client
     upstash_url = os.getenv("UPSTASH_REDIS_REST_URL")
     upstash_token = os.getenv("UPSTASH_REDIS_REST_TOKEN")
-    if upstash_url and upstash_token and upstash_url.startswith(("redis://", "rediss://")):
-        redis_client = aioredis.from_url(
-            upstash_url,
-            password=upstash_token,
-            decode_responses=True,
-        )
+    if upstash_url and upstash_token:
+        redis_client = UpstashRedis(url=upstash_url, token=upstash_token)
     yield
-    if redis_client:
-        await redis_client.aclose()
 
 
 app = FastAPI(title="Deslopify API", lifespan=lifespan)
