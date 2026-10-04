@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
+const MAX_CHARS = 10000;
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const DEMO_TEXT = `The #1 mistake people make with their morning routine?
@@ -59,14 +60,19 @@ export default function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
       });
-      const data = await res.json();
+      let data = null;
+      try {
+        data = await res.json();
+      } catch {
+        // proxy/gateway error pages are not JSON
+      }
       if (!res.ok) {
-        setError(data.detail?.message || "Something went wrong.");
+        setError(errorMessage(res.status, data, res.headers.get("X-Request-ID")));
       } else {
         setResult(data);
       }
     } catch {
-      setError("Could not reach the server. Please try again.");
+      setError("Could not reach the server. Check your connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -80,6 +86,10 @@ export default function App() {
           AI detectors tell you <em>if</em> text was AI-generated.<br />
           Deslopify tells you <em>why</em> — what the author actually wanted.
         </p>
+        <p className="reliability-note" role="note">
+          ⚠ AI-text detection is unreliable. Treat results as a hint, never as proof that
+          someone did or did not write something.
+        </p>
       </header>
 
       <main>
@@ -87,6 +97,7 @@ export default function App() {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
+            maxLength={MAX_CHARS}
             placeholder="Paste a social media post, article, or any text you suspect was AI-generated…"
             rows={10}
           />
@@ -95,7 +106,9 @@ export default function App() {
               Try a demo
             </button>
             <div className="input-actions">
-              <span className="char-count">{text.length.toLocaleString()} chars</span>
+              <span className="char-count">
+                {text.length.toLocaleString()} / {MAX_CHARS.toLocaleString()} chars
+              </span>
               <button
                 onClick={handleAnalyze}
                 disabled={loading || text.trim().length < 50}
@@ -106,17 +119,36 @@ export default function App() {
           </div>
         </section>
 
-        {error && <div className="error-box">{error}</div>}
+        {error && <div className="error-box" role="alert">{error}</div>}
 
         {result && <Results result={result} />}
-
-        {/* AdSense placeholder — replace data-ad-* attrs with real values from AdSense dashboard */}
-        <div className="ad-placeholder" aria-hidden="true">
-          Advertisement
-        </div>
       </main>
 
       <footer>
+        <details className="privacy">
+          <summary>Privacy: what happens to the text you paste</summary>
+          <ul>
+            <li>
+              <strong>Your text is not stored by this site.</strong> It is held in memory
+              only while the analysis runs. It is not written to a database or to logs.
+            </li>
+            <li>
+              To analyze it, the text is sent to the Anthropic API, which processes it under
+              Anthropic&apos;s own terms and retention policy.
+            </li>
+            <li>
+              Stored: anonymous counters (total analyses, AI / human / unclear), and a
+              per-day request counter keyed by your IP address for rate limiting, which
+              expires within 24 hours. Error monitoring (Sentry) receives error details, not
+              your text.
+            </li>
+            <li>
+              Page-view statistics come from Vercel Analytics, which does not use cookies.
+              Hosting providers may keep standard access logs. This site sets no cookies and
+              shows no ads.
+            </li>
+          </ul>
+        </details>
         <p>
           This tool uses AI to analyze AI. It can be wrong.{" "}
           <a
@@ -132,15 +164,32 @@ export default function App() {
   );
 }
 
+function errorMessage(status, data, requestId) {
+  const d = data?.detail;
+  const msg = typeof d === "object" && d?.message ? d.message : null;
+  const ref = requestId ? ` (ref: ${requestId})` : "";
+  if (msg) return msg + (status >= 500 ? ref : "");
+  if (status === 413) return "That text is too large.";
+  if (status >= 500) return "The service is having trouble right now. Please try again in a moment." + ref;
+  return "Something went wrong.";
+}
+
+function Remaining({ n }) {
+  if (n === undefined || n === null) return null;
+  return <p className="remaining">{n} free analyses left today</p>;
+}
+
 function Results({ result }) {
-  if (!result.is_ai) {
+  const pct = Math.round(result.ai_probability * 100);
+
+  if (result.verdict !== "ai") {
+    const uncertain = result.verdict === "uncertain";
     return (
-      <section className="result-box not-ai">
-        <h2>Probably not AI-generated</h2>
-        <p className="confidence">
-          Confidence: {Math.round((1 - result.confidence) * 100)}% human
-        </p>
+      <section className={`result-box ${uncertain ? "uncertain" : "not-ai"}`}>
+        <h2>{uncertain ? "Can’t tell" : "No strong signs of AI generation"}</h2>
+        <p className="confidence">Estimated AI probability: {pct}%</p>
         <p>{result.message}</p>
+        <Injection result={result} />
         {result.signals?.length > 0 && (
           <ul className="signals">
             {result.signals.map((s, i) => (
@@ -148,11 +197,8 @@ function Results({ result }) {
             ))}
           </ul>
         )}
-        {result.remaining_today !== undefined && (
-          <p className="remaining">
-            {result.remaining_today} free analyses left today
-          </p>
-        )}
+        <Remaining n={result.remaining_today} />
+        <Disclaimer result={result} />
       </section>
     );
   }
@@ -162,11 +208,10 @@ function Results({ result }) {
   return (
     <section className="result-box is-ai">
       <div className="result-header">
-        <h2>AI-generated</h2>
-        <span className="confidence-badge">
-          {Math.round(result.confidence * 100)}% confidence
-        </span>
+        <h2>Signs of AI generation</h2>
+        <span className="confidence-badge">{pct}% estimated probability</span>
       </div>
+      <Injection result={result} />
 
       {result.signals?.length > 0 && (
         <div className="signals-row">
@@ -176,52 +221,92 @@ function Results({ result }) {
         </div>
       )}
 
-      <div className="agenda">
-        <h3>The author&apos;s agenda</h3>
-        <p className="summary">{agenda.summary}</p>
+      {agenda ? (
+        <div className="agenda">
+          <h3>The author&apos;s agenda</h3>
+          <p className="summary">{agenda.summary}</p>
 
-        <table className="agenda-table">
-          <tbody>
-            <tr>
-              <th>Primary goal</th>
-              <td>{agenda.primary_goal}</td>
-            </tr>
-            <tr>
-              <th>Content type</th>
-              <td>{agenda.content_type}</td>
-            </tr>
-            <tr>
-              <th>Target platform</th>
-              <td>{agenda.target_platform}</td>
-            </tr>
-            <tr>
-              <th>Target audience</th>
-              <td>{agenda.target_audience}</td>
-            </tr>
-            <tr>
-              <th>Probable CTA</th>
-              <td>{agenda.probable_cta}</td>
-            </tr>
-          </tbody>
-        </table>
+          <table className="agenda-table">
+            <tbody>
+              <tr>
+                <th>Primary goal</th>
+                <td>
+                  {agenda.primary_goal.claim}
+                  <Quote q={agenda.primary_goal.quote} />
+                </td>
+              </tr>
+              <tr>
+                <th>Content type</th>
+                <td>{agenda.content_type}</td>
+              </tr>
+              <tr>
+                <th>Target platform</th>
+                <td>{agenda.target_platform}</td>
+              </tr>
+              <tr>
+                <th>Target audience</th>
+                <td>{agenda.target_audience}</td>
+              </tr>
+              {agenda.probable_cta && (
+                <tr>
+                  <th>Probable CTA</th>
+                  <td>
+                    {agenda.probable_cta.claim}
+                    <Quote q={agenda.probable_cta.quote} />
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-        {agenda.persuasion_tactics?.length > 0 && (
-          <div className="tactics">
-            <h4>Persuasion tactics</h4>
-            <ul>
-              {agenda.persuasion_tactics.map((t, i) => (
-                <li key={i}>{t}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-
-      {result.remaining_today !== undefined && (
-        <p className="remaining">
-          {result.remaining_today} free analyses left today
-        </p>
+          {agenda.persuasion_tactics?.length > 0 && (
+            <div className="tactics">
+              <h4>Persuasion tactics</h4>
+              <ul>
+                {agenda.persuasion_tactics.map((t, i) => (
+                  <li key={i}>
+                    {t.claim}
+                    <Quote q={t.quote} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <p className="verification-note">
+            Each claim above is backed by a quote that was checked against your text.
+            {result.dropped_claims > 0 &&
+              ` ${result.dropped_claims} claim(s) were hidden because their quote could not be found in your text.`}
+          </p>
+        </div>
+      ) : (
+        <p className="verification-note">{result.message}</p>
       )}
+
+      <Remaining n={result.remaining_today} />
+      <Disclaimer result={result} />
     </section>
+  );
+}
+
+function Quote({ q }) {
+  return <blockquote className="quote">“{q}”</blockquote>;
+}
+
+function Injection({ result }) {
+  if (!result.injection_detected) return null;
+  return (
+    <p className="injection-note">
+      This text contains instructions aimed at an AI analyzer. They were ignored and treated as
+      part of the text.
+    </p>
+  );
+}
+
+function Disclaimer({ result }) {
+  return (
+    <p className="disclaimer">
+      {result.disclaimer}
+      {result.request_id && <span className="request-id"> Ref: {result.request_id}</span>}
+    </p>
   );
 }

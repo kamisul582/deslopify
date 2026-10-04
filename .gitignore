@@ -19,3 +19,10 @@ frontend/.env
 
 # OS
 .DS_Store
+
+# Generated
+backend/out/
+.ruff_cache/
+.pytest_cache/
+*.docx
+!docs/*.docx

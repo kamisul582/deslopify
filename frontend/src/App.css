@@ -289,17 +289,6 @@ button:not(:disabled):hover {
   text-align: right;
 }
 
-.ad-placeholder {
-  border: 1px dashed var(--border);
-  border-radius: 10px;
-  padding: 2rem;
-  text-align: center;
-  color: var(--border);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
 footer {
   margin-top: auto;
   text-align: center;
@@ -314,4 +303,63 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+.reliability-note {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+}
+
+.result-box.uncertain {
+  border-left: 3px solid #fbbf24;
+}
+
+.result-box.uncertain h2 {
+  color: #fbbf24;
+}
+
+.quote {
+  margin: 0.35rem 0 0;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.verification-note,
+.disclaimer {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+}
+
+.injection-note {
+  color: #fbbf24;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.privacy {
+  text-align: left;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+}
+
+.privacy summary {
+  cursor: pointer;
+}
+
+.privacy ul {
+  margin: 0.6rem 0 0 1.1rem;
+}
+
+.privacy li {
+  margin-bottom: 0.4rem;
 }
