@@ -1,0 +1,9 @@
+line-length = 140
+target-version = "py311"
+extend-exclude = [".venv"]
+[lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
+[lint.per-file-ignores]
+"tests/*" = ["S"]
+"evals/build_dataset.py" = ["E501"]
