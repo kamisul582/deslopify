@@ -42,6 +42,8 @@ jobs:
       - run: npm run build
 
   secrets:
+    # Dependabot's token is read-only, which gitleaks-action can't work with (it posts PR comments).
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

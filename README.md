@@ -1,10 +1,18 @@
 # Deslopify
 
+**Live: [deslopify.app](https://deslopify.app)** · [MIT license](LICENSE)
+
+![Deslopify demo](docs/demo.gif)
+
 Paste a text. Deslopify estimates whether it shows signs of AI generation and, if it does, reconstructs **what the author was trying to achieve**. Every claim about the author's agenda has to quote the pasted text, and code checks that the quote is really there. When the evidence is thin, it says "can't tell" instead of forcing a verdict.
 
 > **AI-text detection is unreliable.** False accusations of "AI-written" hurt real people. Deslopify's output is a hint for a human to weigh, never proof. The UI says so on every result.
 
 **Privacy:** pasted text is not stored by this app (not in a database, not in logs). It is sent to the Anthropic API for processing. Details are in the app footer and in [Privacy](#privacy).
+
+## Screenshot
+
+![Deslopify result with quoted evidence](docs/screenshot.png)
 
 ## How it works
 

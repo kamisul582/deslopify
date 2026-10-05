@@ -2,10 +2,26 @@ version: 2
 updates:
   - package-ecosystem: pip
     directory: /backend
-    schedule: { interval: weekly }
+    schedule: { interval: monthly }
+    open-pull-requests-limit: 3
+    groups:
+      python-minor-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Major bumps of these need a manual review of the LLM/agent code paths.
+      - dependency-name: anthropic
+        update-types: [version-update:semver-major]
+      - dependency-name: claude-agent-sdk
   - package-ecosystem: npm
     directory: /frontend
-    schedule: { interval: weekly }
+    schedule: { interval: monthly }
+    open-pull-requests-limit: 3
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
   - package-ecosystem: github-actions
     directory: /
-    schedule: { interval: weekly }
+    schedule: { interval: monthly }
+    groups:
+      actions:
+        patterns: ["*"]
