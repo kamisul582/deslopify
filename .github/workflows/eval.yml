@@ -28,7 +28,7 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements*.txt
       - run: pip install -r requirements.txt
-      - name: Run eval (gates: injection resistance, repeatability)
+      - name: "Run eval (gates: injection resistance, repeatability)"
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           MODEL_ID: ${{ inputs.model }}
