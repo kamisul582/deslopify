@@ -160,7 +160,7 @@ export default function App() {
         <p>
           This tool uses AI to analyze AI. It can be wrong.{" "}
           <a
-            href="https://ko-fi.com/"
+            href="https://ko-fi.com/deslopify"
             target="_blank"
             rel="noopener noreferrer"
           >
