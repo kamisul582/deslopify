@@ -3,7 +3,7 @@ import time
 from docx import Document
 from openpyxl import load_workbook
 
-from reports.weekly_report import build_frames, write_docx, write_xlsx
+from reports.weekly_report import build_frames, normalize_base_url, write_docx, write_xlsx
 
 
 def fake_stats():
@@ -23,3 +23,9 @@ def test_summary_and_files(tmp_path):
     wb = load_workbook(tmp_path / "r.xlsx")
     assert wb.sheetnames == ["Summary", "Daily"] and wb["Daily"].max_row == 15
     assert "weekly report" in Document(tmp_path / "r.docx").paragraphs[0].text.lower()
+
+
+def test_normalize_base_url():
+    assert normalize_base_url("deslopify-production.up.railway.app") == "https://deslopify-production.up.railway.app"
+    assert normalize_base_url(" https://x.app/ ") == "https://x.app"
+    assert normalize_base_url("http://localhost:8000") == "http://localhost:8000"
