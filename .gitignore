@@ -26,3 +26,6 @@ backend/out/
 .pytest_cache/
 *.docx
 !docs/*.docx
+
+# Local notes, not for the repo
+chat.txt
