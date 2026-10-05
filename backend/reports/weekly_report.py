@@ -19,8 +19,14 @@ import requests
 from docx import Document
 
 
+def normalize_base_url(url: str) -> str:
+    """Railway's copy button gives a bare hostname; accept it and default to https."""
+    url = url.strip().rstrip("/")
+    return url if url.startswith(("http://", "https://")) else f"https://{url}"
+
+
 def fetch_stats(url: str, secret: str, days: int = 14) -> dict:
-    r = requests.get(f"{url.rstrip('/')}/stats", params={"days": days}, headers={"X-Stats-Secret": secret}, timeout=30)
+    r = requests.get(f"{normalize_base_url(url)}/stats", params={"days": days}, headers={"X-Stats-Secret": secret}, timeout=30)
     r.raise_for_status()
     return r.json()
 
