@@ -7,7 +7,8 @@ from functools import cache
 from pathlib import Path
 
 PROMPT_DIR = Path(__file__).parent / "prompts"
-DEFAULT_VERSIONS = {"detect": "v1", "agenda": "v1"}
+# agenda.v1 is kept for traceability of old eval results; the code only parses the v2 schema.
+DEFAULT_VERSIONS = {"detect": "v1", "agenda": "v2"}
 
 
 def active_versions() -> dict[str, str]:

@@ -89,8 +89,9 @@ python -m evals.compare_models claude-haiku-4-5-20251001 claude-sonnet-5-5
 |---|---|---|---|---|---|---|---|---|---|
 | `claude-haiku-4-5-20251001` | detect v1 / agenda v1 | 1.0 | 1.0 | 1.0 | 0.0 | 0.0 | 0.0 | $0.0032 | 9.5 |
 | `claude-sonnet-5-5` | detect v1 / agenda v1 | 1.0 | 1.0 | 1.0 | 0.042 | 0.0 | 0.042 | $0.0096 | 12.1 |
+| `claude-haiku-4-5-20251001` | detect v1 / agenda **v2** | 1.0 | 1.0 | 1.0 | 0.0 | 0.0 | 0.0 | $0.0030 | 7.6 |
 
-Run on 2026-10-04, 24 clean items x 3 repeats + 18 injection runs per model. Agenda citations that passed verification on AI verdicts: Haiku 80% verified / 20% partial (some claims dropped), Sonnet 94% / 6%. Haiku had 1 of 90 requests fail with unparseable model JSON after the retry (1.1%). Raw results: `backend/evals/results/`.
+Run on 2026-10-04, 24 clean items x 3 repeats + 18 injection runs per model. Agenda citations that passed verification on AI verdicts: Haiku 80% verified / 20% partial (some claims dropped), Sonnet 94% / 6%. Haiku had 1 of 90 requests fail with unparseable model JSON after the retry (1.1%). The `agenda v2` row is the current shipped prompt (shorter output with a TL;DR and a guessed author prompt); on it Haiku had 0 failed requests in 90 (v1: 1) and 86% fully verified agendas (3% had the whole agenda rejected because the main quote was not in the text). The older rows used `agenda v1`. Raw results: `backend/evals/results/`.
 
 > **Honest limits.** Perfect scores on a 24-item synthetic set mean the set is easy, not that the detector is 100% accurate: the texts were written in the *style* of AI and human posts, not sampled from the real world. Treat this as a regression and plumbing check (it would catch a broken prompt, a successful injection, or unstable verdicts), not as a real-world accuracy figure. Extend it with real, independently labelled texts before quoting accuracy. Model choice and rationale: [docs/MODEL_DECISION.md](docs/MODEL_DECISION.md).
 

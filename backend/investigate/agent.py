@@ -58,6 +58,7 @@ def build_tools(inv: Investigation):
             "ai_probability": r.ai_probability,
             "injection_detected": r.injection_detected,
             "agenda_status": r.agenda_status,
+            "tldr": r.agenda.tldr if r.agenda else None,
             "primary_goal": r.agenda.primary_goal.model_dump() if r.agenda else None,
             "tactics": [t.claim for t in r.agenda.persuasion_tactics] if r.agenda else [],
         }

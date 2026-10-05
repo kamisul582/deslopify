@@ -22,13 +22,12 @@ def detection(p=0.9, signals=("uniform aphorisms",), injection=False):
 def agenda(goal_quote="identity does", tactics=(("Identity framing", "because of who you are"),), cta=None):
     return json.dumps(
         {
+            "tldr": "Wants readers to adopt an identity-first mindset.",
+            "likely_prompt": "Write a motivational LinkedIn post arguing that identity, not discipline, builds habits.",
+            "context": "Motivational LinkedIn post for professionals",
             "primary_goal": {"claim": "Sell an identity-first mindset", "quote": goal_quote},
-            "content_type": "Motivational post",
-            "target_platform": "LinkedIn",
-            "target_audience": "Professionals",
             "persuasion_tactics": [{"claim": c, "quote": q} for c, q in tactics],
             "probable_cta": ({"claim": cta[0], "quote": cta[1]} if cta else None),
-            "summary": "A motivational post.",
         }
     )
 

@@ -109,8 +109,14 @@ export default function SharedPage({ id }) {
                 ))}
               </div>
             )}
-            {data.record.agenda && (
+            {data.record.agenda && data.schema_version === 2 && (
               <AgendaView agenda={data.record.agenda} droppedClaims={data.record.dropped_claims} />
+            )}
+            {data.record.agenda && data.schema_version !== 2 && (
+              <p className="verification-note">
+                This result was created with an older version of the tool and its details can no
+                longer be displayed.
+              </p>
             )}
             <p className="disclaimer">
               Created {fmt(data.created_at)} by whoever ran the analysis; expires {fmt(data.expires_at)}.

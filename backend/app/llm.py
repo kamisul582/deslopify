@@ -66,7 +66,8 @@ class LLMClient:
     """Thin wrapper over the Anthropic async client.
 
     - timeouts and retries (429/5xx/connection errors) are handled by the SDK
-    - the model's JSON is validated against a Pydantic schema; one repair retry
+    - the model's JSON is validated against a Pydantic schema; up to two repair turns that
+      show the model its own invalid output and the error
     - SDK errors are translated into LLMError subclasses with safe messages
     """
 
@@ -82,13 +83,14 @@ class LLMClient:
         model = model or self.settings.model
         usage = Usage()
         last_err: Exception | None = None
-        for attempt in range(2):
+        messages = [{"role": "user", "content": user}]
+        for attempt in range(3):
             try:
                 resp = await self.client.messages.create(
                     model=model,
                     max_tokens=1024,
                     system=system,
-                    messages=[{"role": "user", "content": user}],
+                    messages=messages,
                 )
             except anthropic.APITimeoutError as e:
                 raise LLMTimeout() from e
@@ -112,4 +114,16 @@ class LLMClient:
             except (ValueError, ValidationError) as e:
                 last_err = e
                 log.warning("model_output_invalid", extra={"attempt": attempt})
+                # Repair turn: show the model its own invalid output and what was wrong.
+                # A plain re-send tends to reproduce the same mistake for the same text.
+                problem = str(e).splitlines()[0][:200]
+                messages = [
+                    *messages[:1],
+                    {"role": "assistant", "content": text or "(empty)"},
+                    {
+                        "role": "user",
+                        "content": f"That was not valid ({problem}). Reply again with ONLY the corrected JSON object, "
+                        "properly escaping any double quotes inside strings.",
+                    },
+                ]
         raise LLMBadOutput() from last_err

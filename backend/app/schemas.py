@@ -36,26 +36,26 @@ class Claim(BaseModel):
 
 
 class AgendaOut(BaseModel):
+    tldr: str = Field(min_length=1, max_length=300)
+    # A hypothesis about the author's prompt. Cannot be verified against the text, so
+    # the UI always labels it as a guess.
+    likely_prompt: str = Field(min_length=1, max_length=600)
     primary_goal: Claim
-    content_type: str = Field(max_length=200)
-    target_platform: str = Field(max_length=200)
-    target_audience: str = Field(max_length=300)
-    persuasion_tactics: list[Claim] = Field(default_factory=list, max_length=5)
+    persuasion_tactics: list[Claim] = Field(default_factory=list, max_length=3)
     probable_cta: Claim | None = None
-    summary: str = Field(max_length=1500)
+    context: str = Field(max_length=200)
 
 
 # ── What the API returns ──────────────────────────────────────────────────────
 
 
 class VerifiedAgenda(BaseModel):
+    tldr: str
+    likely_prompt: str
     primary_goal: Claim
-    content_type: str
-    target_platform: str
-    target_audience: str
     persuasion_tactics: list[Claim]
     probable_cta: Claim | None
-    summary: str
+    context: str
 
 
 class ShareRecord(BaseModel):

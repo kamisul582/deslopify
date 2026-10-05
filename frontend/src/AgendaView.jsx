@@ -6,60 +6,59 @@ export function Quote({ q }) {
 export default function AgendaView({ agenda, droppedClaims = 0 }) {
   return (
     <div className="agenda">
-      <h3>The author&apos;s agenda</h3>
-      <p className="summary">{agenda.summary}</p>
+      <div className="tldr">
+        <span className="label">TL;DR</span>
+        <p>{agenda.tldr}</p>
+        <p className="context">{agenda.context}</p>
+      </div>
 
-      <table className="agenda-table">
-        <tbody>
-          <tr>
-            <th>Primary goal</th>
-            <td>
-              {agenda.primary_goal.claim}
-              <Quote q={agenda.primary_goal.quote} />
-            </td>
-          </tr>
-          <tr>
-            <th>Content type</th>
-            <td>{agenda.content_type}</td>
-          </tr>
-          <tr>
-            <th>Target platform</th>
-            <td>{agenda.target_platform}</td>
-          </tr>
-          <tr>
-            <th>Target audience</th>
-            <td>{agenda.target_audience}</td>
-          </tr>
+      <div className="likely-prompt">
+        <span className="label">A plausible prompt behind it</span>
+        <p className="guess-note">
+          A guess reconstructed from the text, not something the author is known to have written.
+        </p>
+        <blockquote lang="und">{agenda.likely_prompt}</blockquote>
+      </div>
+
+      <div className="evidence">
+        <span className="label">Evidence</span>
+        <dl>
+          <dt>Main goal</dt>
+          <dd>
+            {agenda.primary_goal.claim}
+            <Quote q={agenda.primary_goal.quote} />
+          </dd>
+          {agenda.persuasion_tactics?.length > 0 && (
+            <>
+              <dt>Tactics</dt>
+              <dd>
+                <ul>
+                  {agenda.persuasion_tactics.map((t, i) => (
+                    <li key={i}>
+                      {t.claim}
+                      <Quote q={t.quote} />
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </>
+          )}
           {agenda.probable_cta && (
-            <tr>
-              <th>Probable CTA</th>
-              <td>
+            <>
+              <dt>Call to action</dt>
+              <dd>
                 {agenda.probable_cta.claim}
                 <Quote q={agenda.probable_cta.quote} />
-              </td>
-            </tr>
+              </dd>
+            </>
           )}
-        </tbody>
-      </table>
-
-      {agenda.persuasion_tactics?.length > 0 && (
-        <div className="tactics">
-          <h4>Persuasion tactics</h4>
-          <ul>
-            {agenda.persuasion_tactics.map((t, i) => (
-              <li key={i}>
-                {t.claim}
-                <Quote q={t.quote} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <p className="verification-note">
-        Each claim above is backed by a quote that was checked against the analysed text.
-        {droppedClaims > 0 &&
-          ` ${droppedClaims} claim(s) were hidden because their quote could not be found in the text.`}
-      </p>
+        </dl>
+        <p className="verification-note">
+          Every quote above was checked against the analysed text.
+          {droppedClaims > 0 &&
+            ` ${droppedClaims} claim(s) were hidden because their quote could not be found in the text.`}
+        </p>
+      </div>
     </div>
   );
 }

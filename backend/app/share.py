@@ -17,7 +17,7 @@ from .config import Settings
 from .schemas import ShareRecord, ShareTicket
 from .store import StoreUnavailable
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2  # 2: agenda has tldr / likely_prompt / context (prompt agenda.v2)
 ID_RE = re.compile(r"^[A-Za-z0-9_-]{22}$")  # token_urlsafe(16)
 
 

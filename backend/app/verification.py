@@ -50,12 +50,11 @@ def verify_agenda(agenda: AgendaOut, text: str) -> tuple[VerifiedAgenda | None, 
         dropped += 1
 
     verified = VerifiedAgenda(
+        tldr=agenda.tldr,
+        likely_prompt=agenda.likely_prompt,
         primary_goal=agenda.primary_goal,
-        content_type=agenda.content_type,
-        target_platform=agenda.target_platform,
-        target_audience=agenda.target_audience,
         persuasion_tactics=tactics,
         probable_cta=cta,
-        summary=agenda.summary,
+        context=agenda.context,
     )
     return verified, ("partial" if dropped else "verified"), dropped

@@ -46,7 +46,8 @@ def test_ai_with_verified_agenda(build):
     assert body["verdict"] == "ai"
     assert body["agenda_status"] == "verified"
     assert body["agenda"]["primary_goal"]["quote"] == "identity does"
-    assert body["prompt_versions"] == {"detect": "v1", "agenda": "v1"}
+    assert body["agenda"]["tldr"] and body["agenda"]["likely_prompt"] and body["agenda"]["context"]
+    assert body["prompt_versions"] == {"detect": "v1", "agenda": "v2"}
     assert body["request_id"] and r.headers["x-request-id"] == body["request_id"]
     assert "unreliable" in body["disclaimer"]
 
@@ -164,11 +165,14 @@ def test_upstream_errors_become_clean_messages_and_refund(build, exc, status, co
     assert post(client).status_code == 200  # quota was refunded
 
 
-def test_garbage_model_output_retries_once_then_502(build):
-    client, msgs, _ = build(["not json", "still not json"])
+def test_garbage_model_output_gets_two_repair_turns_then_502(build):
+    client, msgs, _ = build(["not json", "still not json", "nope"])
     r = post(client)
     assert r.status_code == 502 and r.json()["detail"]["error"] == "model_output_invalid"
-    assert len(msgs.calls) == 2
+    assert len(msgs.calls) == 3
+    repair = msgs.calls[1]["messages"]
+    assert [m["role"] for m in repair] == ["user", "assistant", "user"]
+    assert repair[1]["content"] == "not json" and "corrected JSON" in repair[2]["content"]
 
 
 def test_garbage_then_valid_recovers(build):
@@ -177,7 +181,7 @@ def test_garbage_then_valid_recovers(build):
 
 
 def test_out_of_range_probability_rejected(build):
-    client, _, _ = build(['{"ai_probability": 7, "signals": []}'] * 2)
+    client, _, _ = build(['{"ai_probability": 7, "signals": []}'] * 3)
     assert post(client).status_code == 502
 
 

@@ -17,12 +17,11 @@ POSTS = {
 def result(verdict, p):
     ag = VerifiedAgenda(
         primary_goal=Claim(claim="Sell identity mindset", quote="discipline is a story"),
-        content_type="x",
-        target_platform="x",
-        target_audience="x",
+        tldr="t",
+        likely_prompt="p",
+        context="c",
         persuasion_tactics=[],
         probable_cta=None,
-        summary="s",
     )
     return PipelineResult(
         verdict,

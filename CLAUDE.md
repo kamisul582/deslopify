@@ -22,7 +22,7 @@ Detects likely AI-generated text and reconstructs the author's agenda. Backend: 
 - Wording matters: results are "estimates", never "proof"; keep the banner and the creator acknowledgement. Changing the result shape means bumping `share.SCHEMA_VERSION` and keeping the share page able to read old versions.
 
 ## Prompts
-Files `app/prompts/<name>.<version>.md`. Changing a prompt's wording = **new version file** + bump `DEFAULT_VERSIONS` in `app/prompts.py`; never edit a released version in place (results are traced by version). Then run the eval and update the README table and `docs/MODEL_DECISION.md`.
+Files `app/prompts/<name>.<version>.md`. Changing a prompt's wording = **new version file** (and the output schema in `schemas.py` only tracks the newest agenda version; `agenda.v1.md` is history) + bump `DEFAULT_VERSIONS` in `app/prompts.py`; never edit a released version in place (results are traced by version). Then run the eval and update the README table and `docs/MODEL_DECISION.md`.
 
 ## Tests
 `tests/` fakes Anthropic (`FakeMessages` in `conftest.py`) and Redis (`MemoryStore`); no network. Add a test with every behaviour change. Honest reporting rule: never write eval numbers into docs that weren't produced by a real run.
