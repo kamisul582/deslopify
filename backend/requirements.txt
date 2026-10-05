@@ -3,5 +3,5 @@ uvicorn[standard]==0.32.1
 anthropic==1.11.0
 upstash-redis==1.8.0
 python-dotenv==1.0.1
-pydantic==2.10.3
+pydantic==2.13.5
 sentry-sdk==2.71.0
