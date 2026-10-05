@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import AgendaView from "./AgendaView";
+import ShareBox from "./ShareBox";
 
 const MAX_CHARS = 10000;
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
@@ -133,6 +135,12 @@ export default function App() {
               only while the analysis runs. It is not written to a database or to logs.
             </li>
             <li>
+              Nothing is shared unless you click &ldquo;Create share link&rdquo;. If you do, the
+              result (verdict, estimate, signals and the short quotes behind each claim, not your
+              full text) is stored for 30 days and visible to anyone with the link. You can delete
+              it at any time, and anyone can report a shared result for removal.
+            </li>
+            <li>
               To analyze it, the text is sent to the Anthropic API, which processes it under
               Anthropic&apos;s own terms and retention policy.
             </li>
@@ -199,6 +207,7 @@ function Results({ result }) {
         )}
         <Remaining n={result.remaining_today} />
         <Disclaimer result={result} />
+        {result.share && <ShareBox share={result.share} />}
       </section>
     );
   }
@@ -222,74 +231,16 @@ function Results({ result }) {
       )}
 
       {agenda ? (
-        <div className="agenda">
-          <h3>The author&apos;s agenda</h3>
-          <p className="summary">{agenda.summary}</p>
-
-          <table className="agenda-table">
-            <tbody>
-              <tr>
-                <th>Primary goal</th>
-                <td>
-                  {agenda.primary_goal.claim}
-                  <Quote q={agenda.primary_goal.quote} />
-                </td>
-              </tr>
-              <tr>
-                <th>Content type</th>
-                <td>{agenda.content_type}</td>
-              </tr>
-              <tr>
-                <th>Target platform</th>
-                <td>{agenda.target_platform}</td>
-              </tr>
-              <tr>
-                <th>Target audience</th>
-                <td>{agenda.target_audience}</td>
-              </tr>
-              {agenda.probable_cta && (
-                <tr>
-                  <th>Probable CTA</th>
-                  <td>
-                    {agenda.probable_cta.claim}
-                    <Quote q={agenda.probable_cta.quote} />
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-
-          {agenda.persuasion_tactics?.length > 0 && (
-            <div className="tactics">
-              <h4>Persuasion tactics</h4>
-              <ul>
-                {agenda.persuasion_tactics.map((t, i) => (
-                  <li key={i}>
-                    {t.claim}
-                    <Quote q={t.quote} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <p className="verification-note">
-            Each claim above is backed by a quote that was checked against your text.
-            {result.dropped_claims > 0 &&
-              ` ${result.dropped_claims} claim(s) were hidden because their quote could not be found in your text.`}
-          </p>
-        </div>
+        <AgendaView agenda={agenda} droppedClaims={result.dropped_claims} />
       ) : (
         <p className="verification-note">{result.message}</p>
       )}
 
       <Remaining n={result.remaining_today} />
       <Disclaimer result={result} />
+      {result.share && <ShareBox share={result.share} />}
     </section>
   );
-}
-
-function Quote({ q }) {
-  return <blockquote className="quote">“{q}”</blockquote>;
 }
 
 function Injection({ result }) {

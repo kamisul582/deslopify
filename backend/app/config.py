@@ -34,6 +34,12 @@ class Settings:
     upstash_url: str | None = None
     upstash_token: str | None = None
     sentry_dsn: str | None = None
+    # Opt-in result sharing. Disabled unless a signing secret is set AND Redis is configured.
+    share_secret: str | None = None
+    share_ttl_days: int = 30
+    shares_per_day: int = 10
+    ticket_ttl_s: int = 3600
+    report_hide_threshold: int = 3
     # Verdict thresholds on ai_probability: <= human_max -> human, >= ai_min -> ai,
     # in between -> "uncertain" (we refuse to force a verdict).
     human_max: float = 0.35
@@ -55,4 +61,8 @@ class Settings:
             upstash_url=g("UPSTASH_REDIS_REST_URL"),
             upstash_token=g("UPSTASH_REDIS_REST_TOKEN"),
             sentry_dsn=g("SENTRY_DSN") or None,
+            share_secret=g("SHARE_SIGNING_SECRET") or None,
+            share_ttl_days=int(g("SHARE_TTL_DAYS", cls.share_ttl_days)),
+            shares_per_day=int(g("SHARES_PER_DAY", cls.shares_per_day)),
+            report_hide_threshold=int(g("REPORT_HIDE_THRESHOLD", cls.report_hide_threshold)),
         )

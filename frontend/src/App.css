@@ -363,3 +363,85 @@ footer a:hover {
 .privacy li {
   margin-bottom: 0.4rem;
 }
+
+.share-box {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.share-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.share-ack {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  margin-top: 0.75rem;
+  color: var(--muted);
+}
+
+.share-ack input {
+  margin-top: 0.3rem;
+}
+
+.share-link {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.share-link input {
+  flex: 1;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+}
+
+.share-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: 0.6rem;
+  word-break: break-all;
+}
+
+.estimate-banner {
+  border: 1px solid #fbbf24;
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  color: var(--text);
+  background: #fbbf2414;
+  font-size: 0.92rem;
+}
+
+.result-box.uncertain-neutral {
+  border-left: 3px solid #fbbf24;
+}
+
+.result-box.uncertain-neutral h2 {
+  color: var(--text);
+}
+
+.home-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link-btn {
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+  padding: 0.55rem 1.4rem;
+  font-size: 0.95rem;
+}
+
+.muted {
+  color: var(--muted);
+}

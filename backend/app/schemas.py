@@ -1,6 +1,6 @@
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, StringConstraints, field_validator
 
 from .config import MAX_TEXT_CHARS, MIN_TEXT_CHARS
 
@@ -58,6 +58,29 @@ class VerifiedAgenda(BaseModel):
     summary: str
 
 
+class ShareRecord(BaseModel):
+    """The part of a result that may be published. Deliberately excludes the pasted
+    text itself; the only fragments of it are the short verified quotes in `agenda`."""
+
+    verdict: Literal["ai", "human", "uncertain"]
+    ai_probability: float = Field(ge=0.0, le=1.0)
+    signals: list[Annotated[str, StringConstraints(max_length=300)]] = Field(max_length=4)
+    injection_detected: bool
+    agenda: VerifiedAgenda | None
+    agenda_status: Literal["verified", "partial", "rejected", "skipped"]
+    dropped_claims: int = Field(ge=0, le=20)
+    model: str = Field(max_length=100)
+    prompt_versions: dict[str, str]
+
+
+class ShareTicket(BaseModel):
+    """A result plus a server signature. /share accepts only unmodified tickets, so
+    nobody can publish a fabricated analysis under this site's name."""
+
+    record: ShareRecord
+    ticket: str = Field(max_length=200)
+
+
 class AnalyzeResponse(BaseModel):
     request_id: str
     verdict: Literal["ai", "human", "uncertain"]
@@ -71,6 +94,7 @@ class AnalyzeResponse(BaseModel):
     remaining_today: int | None = None
     model: str
     prompt_versions: dict[str, str]
+    share: ShareTicket | None = None
     disclaimer: str = (
         "AI-text detection is unreliable and can be wrong. Never use this result as " "proof that a person did or did not write something."
     )

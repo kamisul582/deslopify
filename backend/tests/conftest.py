@@ -66,3 +66,17 @@ def build():
         return TestClient(app), msgs, store
 
     return _build
+
+
+@pytest.fixture
+def build_share():
+    """Like `build`, but with sharing enabled: a signing secret and a durable (in-memory) store."""
+
+    def _build(responses, **settings_kw):
+        settings_kw.setdefault("share_secret", "test-signing-secret")
+        settings_kw.setdefault("trusted_proxy_hops", 1)
+        settings, llm, msgs = make_client(responses, **settings_kw)
+        store = ResilientStore(MemoryStore())
+        return TestClient(create_app(settings, llm, store)), msgs, store, settings
+
+    return _build

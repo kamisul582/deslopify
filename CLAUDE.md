@@ -15,6 +15,12 @@ Detects likely AI-generated text and reconstructs the author's agenda. Backend: 
 - Never log request bodies or IPs. Sentry stays `send_default_pii=False`.
 - Security controls fail closed (`/stats` 404 without `STATS_SECRET`; budget breaker blocks before the LLM call).
 
+## Sharing
+- `/share` must only accept server-signed tickets (`share.verify_ticket`); never accept a client-supplied result.
+- Shared records must never contain the pasted text. Quotes are the only fragments, and `ShareRecord` has bounded field sizes.
+- Shares live only in the durable store (`ResilientStore.durable` / `primary`); no silent in-memory fallback.
+- Wording matters: results are "estimates", never "proof"; keep the banner and the creator acknowledgement. Changing the result shape means bumping `share.SCHEMA_VERSION` and keeping the share page able to read old versions.
+
 ## Prompts
 Files `app/prompts/<name>.<version>.md`. Changing a prompt's wording = **new version file** + bump `DEFAULT_VERSIONS` in `app/prompts.py`; never edit a released version in place (results are traced by version). Then run the eval and update the README table and `docs/MODEL_DECISION.md`.
 

@@ -11,12 +11,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from upstash_redis.asyncio import Redis as UpstashRedis
 
-from . import limits
+from . import limits, share, share_routes
 from .config import Settings
 from .llm import LLMClient, LLMError
 from .logging_setup import request_id_var, setup_logging
 from .pipeline import run_pipeline
-from .schemas import AnalyzeRequest, AnalyzeResponse
+from .schemas import AnalyzeRequest, AnalyzeResponse, ShareRecord
 from .store import ResilientStore
 
 log = logging.getLogger("deslopify.api")
@@ -48,8 +48,8 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None, s
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.allowed_origins,
-        allow_methods=["POST"],
-        allow_headers=["Content-Type"],
+        allow_methods=["GET", "POST", "DELETE"],
+        allow_headers=["Content-Type", "X-Delete-Key"],
     )
 
     @app.middleware("http")
@@ -94,6 +94,8 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None, s
             content={"detail": {"error": "invalid_request", "message": "; ".join(msgs)}},
         )
 
+    share_routes.register(app, settings, store)
+
     @app.get("/health")
     async def health():
         return {"status": "ok", "persistent_store": store.persistent}
@@ -129,6 +131,7 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None, s
             "ai_detected": ai,
             "not_ai": await n("stats:not_ai"),
             "uncertain": await n("stats:uncertain"),
+            "shares": await n("stats:shares"),
             "today": daily[0]["analyses"],
             "ai_detection_rate_pct": round(ai / max(total, 1) * 100, 1),
             "daily": daily,
@@ -183,6 +186,25 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None, s
                 "cost_usd": round(result.usage.cost_usd, 6),
             },
         )
+        ticket = None
+        if share_routes.sharing_enabled(settings, store):
+            try:
+                ticket = share.make_ticket(
+                    settings,
+                    ShareRecord(
+                        verdict=result.verdict,
+                        ai_probability=result.ai_probability,
+                        signals=result.signals,
+                        injection_detected=result.injection_detected,
+                        agenda=result.agenda,
+                        agenda_status=result.agenda_status,
+                        dropped_claims=result.dropped_claims,
+                        model=result.model,
+                        prompt_versions=result.prompt_versions,
+                    ),
+                )
+            except ValueError:
+                log.warning("share_record_invalid")  # analysis still succeeds, just not shareable
         return AnalyzeResponse(
             request_id=request_id_var.get(),
             verdict=result.verdict,
@@ -196,6 +218,7 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None, s
             remaining_today=remaining,
             model=result.model,
             prompt_versions=result.prompt_versions,
+            share=ticket,
         )
 
     return app

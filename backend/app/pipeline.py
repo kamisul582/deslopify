@@ -68,7 +68,7 @@ async def run_pipeline(text: str, llm: LLMClient, settings: Settings, model: str
     return PipelineResult(
         verdict=verdict,
         ai_probability=det.ai_probability,
-        signals=det.signals,
+        signals=[sig[:300] for sig in det.signals],
         injection_detected=det.injection_attempt,
         agenda=agenda,
         agenda_status=status,

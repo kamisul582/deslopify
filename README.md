@@ -8,7 +8,7 @@ Paste a text. Deslopify estimates whether it shows signs of AI generation and, i
 
 > **AI-text detection is unreliable.** False accusations of "AI-written" hurt real people. Deslopify's output is a hint for a human to weigh, never proof. The UI says so on every result.
 
-**Privacy:** pasted text is not stored by this app (not in a database, not in logs). It is sent to the Anthropic API for processing. Details are in the app footer and in [Privacy](#privacy).
+**Privacy:** pasted text is not stored by this app (not in a database, not in logs). It is sent to the Anthropic API for processing. Results are only stored if you explicitly create a share link (see [Sharing](#sharing-results-opt-in)). Details are in the app footer and in [Privacy](#privacy).
 
 ## Screenshot
 
@@ -35,6 +35,17 @@ flowchart LR
 ```
 
 The same pipeline (`backend/app/pipeline.py`) is used by the API, the eval suite and the investigation agent.
+
+## Sharing results (opt-in)
+
+After an analysis you can create a public link to the result. Nothing is stored unless you click, and the design assumes a shared result is a public claim about someone's writing, so it is built to be hard to misuse:
+
+- **Only real results can be published.** `/analyze` returns the shareable part of the result with an HMAC ticket (signed with `SHARE_SIGNING_SECRET`, valid 1 hour). `/share` accepts only an unmodified ticket, so nobody can fabricate an "analysis" and publish it under this site's name (tested: tampering with the probability or a claim is rejected).
+- **The pasted text is never stored.** Only the verdict, estimate, signals and the short verified quotes behind each claim.
+- **Links expire** after 30 days (Redis TTL), can be **deleted** by their creator (random delete key, only its SHA-256 is stored), and can be **reported**: a share is hidden after 3 reports from different IPs.
+- **Not indexable:** `X-Robots-Tag` on the API, `noindex` meta and `robots.txt` on the page.
+- **Wording does the harm reduction.** The creator must tick that this is an unreliable estimate, not proof. The shared page opens with a banner saying it is not a finding, headlines are "Shows some signs often linked to AI-written text" / "Inconclusive" / "No strong signs of AI writing", the score is called "rough, not a measured probability", and the page states the author of the text had no part in it.
+- Sharing is disabled (503) unless `SHARE_SIGNING_SECRET` is set and Redis is configured: shares never silently fall back to per-process memory. Creating links is rate limited per IP (`SHARES_PER_DAY`).
 
 ## Design decisions: what the model does, what code does
 
@@ -139,7 +150,7 @@ See `backend/.env.example` (every variable is documented there) and `frontend/.e
 
 ## Privacy
 
-Not stored by this app: the text you paste. It is processed in memory and forwarded to the Anthropic API (governed by Anthropic's terms). Stored: anonymous aggregate counters and a per-IP daily request counter that expires within 24 hours. No cookies, no ads. Vercel Analytics provides cookieless page-view counts. Hosting providers may keep standard access logs.
+Not stored by this app: the text you paste (also not when you share a result). It is processed in memory and forwarded to the Anthropic API (governed by Anthropic's terms). Stored: anonymous aggregate counters, a per-IP daily request counter that expires within 24 hours, and, only if you create a share link, the result with its short quotes for 30 days. No cookies, no ads. Vercel Analytics provides cookieless page-view counts. Hosting providers may keep standard access logs.
 
 ## License
 

@@ -9,6 +9,10 @@ import time
 log = logging.getLogger("deslopify.store")
 
 
+class StoreUnavailable(Exception):
+    pass
+
+
 class MemoryStore:
     def __init__(self):
         self._d: dict[str, int] = {}
@@ -33,6 +37,18 @@ class MemoryStore:
     async def get(self, key: str):
         self._purge(key)
         return self._d.get(key)
+
+    async def set(self, key: str, value, ex: int | None = None):
+        self._d[key] = value
+        if ex is not None:
+            self._exp[key] = time.time() + ex
+        else:
+            self._exp.pop(key, None)
+        return True
+
+    async def delete(self, key: str):
+        self._exp.pop(key, None)
+        return 1 if self._d.pop(key, None) is not None else 0
 
     async def expire(self, key: str, seconds: int):
         self._exp[key] = time.time() + seconds
@@ -69,3 +85,14 @@ class ResilientStore:
     @property
     def persistent(self) -> bool:
         return self.primary is not None
+
+    # Shared results must live in the durable store. No silent per-process fallback:
+    # a share that only exists in one worker's memory would vanish or 404 at random.
+    async def durable(self, name: str, *args):
+        if self.primary is None:
+            raise StoreUnavailable("no durable store configured")
+        try:
+            return await getattr(self.primary, name)(*args)
+        except Exception as e:
+            log.exception("redis_error", extra={"op": name})
+            raise StoreUnavailable("durable store failed") from e
