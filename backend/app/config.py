@@ -28,7 +28,7 @@ class Settings:
     daily_budget_usd: float = 5.0
     # Number of reverse proxies between the internet and this app that append to
     # X-Forwarded-For. 0 = ignore the header entirely (use the socket peer).
-    trusted_proxy_hops: int = 1
+    trusted_proxy_hops: int = 2
     allowed_origins: list[str] = field(default_factory=lambda: ["http://localhost:5173"])
     stats_secret: str | None = None
     upstash_url: str | None = None

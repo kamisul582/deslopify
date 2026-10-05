@@ -47,7 +47,7 @@ Where AI is deliberately **not** used: access control, accounting, verdict thres
 
 ## Security notes
 
-- **Client IP for rate limiting.** `X-Forwarded-For` is client-controlled on its left side, so it is read from the **right**: with `TRUSTED_PROXY_HOPS=N`, the client is the Nth entry from the right (what *our* proxy appended). `0` ignores the header. Spoofing tests are in `tests/test_api.py`. Check the value for your host (Railway edge = 1) with one real request.
+- **Client IP for rate limiting.** `X-Forwarded-For` is client-controlled on its left side, so it is read from the **right**: with `TRUSTED_PROXY_HOPS=N`, the client is the Nth entry from the right (what *our* proxy appended). `0` ignores the header. Spoofing tests are in `tests/test_api.py`. On Railway the right value is `2`, verified in production by comparing the Redis rate-limit keys with the caller's real IP (with `1` the keys were Railway edge proxy addresses, so all users shared two buckets). Verify this again if you change host.
 - **Global spend breaker.** `DAILY_BUDGET_USD` stops all analyses once estimated daily spend is reached, independent of per-IP limits. Spend is estimated from token usage (conservative: cache discounts ignored). The check happens before the call, so a burst can overshoot by the in-flight requests.
 - **`/stats`** is off (404) unless `STATS_SECRET` is set; the secret travels in the `X-Stats-Secret` header and is compared with `hmac.compare_digest`.
 - **CORS** allows only `ALLOWED_ORIGINS` (POST + Content-Type). Set it to your frontend origin in production.
