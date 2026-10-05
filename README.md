@@ -75,7 +75,7 @@ Run on 2026-10-04, 24 clean items x 3 repeats + 18 injection runs per model. Age
 
 > **Honest limits.** Perfect scores on a 24-item synthetic set mean the set is easy, not that the detector is 100% accurate: the texts were written in the *style* of AI and human posts, not sampled from the real world. Treat this as a regression and plumbing check (it would catch a broken prompt, a successful injection, or unstable verdicts), not as a real-world accuracy figure. Extend it with real, independently labelled texts before quoting accuracy. Model choice and rationale: [docs/MODEL_DECISION.md](docs/MODEL_DECISION.md).
 
-Prompts are versioned files (`backend/app/prompts/<name>.<version>.md`); the active versions and the model are returned with, and logged for, every result. CI runs the eval on prompt changes and nightly (`.github/workflows/eval.yml`, needs the `ANTHROPIC_API_KEY` secret) with gates on accuracy, injection success and flip rate. Unit tests (no API calls) run on every PR.
+Prompts are versioned files (`backend/app/prompts/<name>.<version>.md`); the active versions and the model are returned with, and logged for, every result. The eval runs only on demand (Actions tab → "Eval suite" → Run workflow, with a model input; needs the `ANTHROPIC_API_KEY` secret) because it spends API money. It gates on injection success and flip rate. Unit tests (no API calls) run on every PR.
 
 ## Investigation mode (Claude Agent SDK)
 

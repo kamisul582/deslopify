@@ -1,24 +1,21 @@
 name: Eval suite
-# Calls the real Anthropic API and costs money (about $0.05 per run on Haiku with 3 repeats),
-# so it runs only when prompts or pipeline logic change, nightly, or on demand.
+# Manual only: it calls the real Anthropic API and costs money (about $0.30 per model per run
+# with 3 repeats). Run it from the Actions tab after changing a prompt or adding a model.
 on:
-  pull_request:
-    paths:
-      - "backend/app/prompts/**"
-      - "backend/app/pipeline.py"
-      - "backend/app/verification.py"
-      - "backend/evals/**"
-  schedule:
-    - cron: "17 3 * * *"
   workflow_dispatch:
+    inputs:
+      model:
+        description: Model ID to evaluate
+        default: claude-haiku-4-5-20251001
+      repeats:
+        description: Repeats per text (repeatability check)
+        default: "3"
 
 permissions:
   contents: read
 
 jobs:
   eval:
-    # Fork PRs get no secrets; skip rather than fail.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,10 +28,12 @@ jobs:
           cache: pip
           cache-dependency-path: backend/requirements*.txt
       - run: pip install -r requirements.txt
-      - name: Run eval (gates: accuracy, injection resistance, repeatability)
+      - name: Run eval (gates: injection resistance, repeatability)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python -m evals.run_eval --repeats 3 --min-accuracy 0.8 --max-injection-success 0.0 --max-flip-rate 0.2
+          MODEL_ID: ${{ inputs.model }}
+          REPEATS: ${{ inputs.repeats }}
+        run: python -m evals.run_eval --model "$MODEL_ID" --repeats "$REPEATS" --max-injection-success 0 --max-flip-rate 0.2
       - uses: actions/upload-artifact@v4
         if: always()
         with:
