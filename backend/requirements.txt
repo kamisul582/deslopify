@@ -1,7 +1,7 @@
-fastapi==0.142.2
-uvicorn[standard]==0.32.1
-anthropic==1.11.0
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+anthropic==1.17.0
 upstash-redis==1.8.0
-python-dotenv==1.0.1
-pydantic==2.13.5
-sentry-sdk==2.71.0
+python-dotenv==1.2.4
+pydantic==2.14.2
+sentry-sdk==2.73.0
